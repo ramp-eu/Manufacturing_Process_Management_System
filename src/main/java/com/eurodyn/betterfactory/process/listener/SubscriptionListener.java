@@ -17,9 +17,9 @@ public class SubscriptionListener {
 
     @EventListener
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-        RuntimeService runtimeService=processEngine.getRuntimeService();
-        MessageCorrelationResult result = runtimeService.createMessageCorrelation("StartSubscriptionEntity")
-                .correlateWithResult();
+//        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+//        RuntimeService runtimeService=processEngine.getRuntimeService();
+//        MessageCorrelationResult result = runtimeService.createMessageCorrelation("StartSubscriptionEntity")
+//                .correlateWithResult();
     }
 }
