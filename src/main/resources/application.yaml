@@ -2,7 +2,7 @@ spring.datasource.url: jdbc:h2:file:./camunda-h2-database
 firewareUrl: http://bf-reconfig-server.eurodyn.com:1026/v2/entities
 subscriptionUrl: http://bf-reconfig-server.eurodyn.com:1026/v2/subscriptions
 notificationUrl: http://bf-reconfig-server.eurodyn.com:8080/subscription
-entityType: APMRobotProfile1, APMRobotProfile2, APMRobotProfile3, APMRobotProfile4, Test
+entityType: APMRobotProfile, APMManufacturingTasksDefReq, MESManufacturingTasksDefResp
 camunda.bpm.admin-user:
   id: demo
   password: demo
