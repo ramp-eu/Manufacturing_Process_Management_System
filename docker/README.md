@@ -1,5 +1,5 @@
 **Deploy the docker services:**
-- Once you have packaged the application (see general README), a **`mpms_7-15-1.0.0-SNAPSHOT.jar`**  file is generated in **`target`** folder.
+- Once you have packaged the application, a **`mpms_7-15-1.0.0-SNAPSHOT.jar`**  file is generated in **`target`** folder.
   So, you basically need the following file structure:
 
   ![docker package file explorer](https://surfdrive.surf.nl/files/index.php/s/sv1Unera5sZwOtY/download)
