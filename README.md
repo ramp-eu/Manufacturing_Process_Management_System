@@ -31,7 +31,7 @@ Regarding the Execution (runtime) bundles that this repository generates (as Doc
 With respect  to interfacing to other components, MPMS is primarily built to communicate through [FIWARE](https://www.fiware.org/). MPMS posts task assignments on FIWARE, which are eventually picked-up by device controllers, any resources, or any component who is interested in these tasks (Note that these tasks refer to ones directed to automated agents, opposed to the tasks for human agents can be directly provided in the built-in Tasklist web application). Accordingly, MPMS receives task statuses. Resource statuses and alerts are also picked-up by MPMS through FIWARE.
 Of course, communication to/from MPMS can be done through the REST/JAVA API, or (HTTP) Connectors, or web services. 
 
- ![MPMS_interfaces](https://surfdrive.surf.nl/files/index.php/s/0hPc0IzQ1Q035jA/download)
+ ![MPMS_interfaces](https://surfdrive.surf.nl/files/index.php/s/AJvVLiFBm5Me5ZF/download)
 
 In SHOP4CF, the chosen Context Broker component of the FIWARE platform is the [Orion-LD](https://github.com/FIWARE/context.Orion-LD), which implements the [NGSI-LD](https://en.wikipedia.org/wiki/NGSI-LD) information model and API. 
 
@@ -59,21 +59,22 @@ See examples for creating subscriptions and performing CRUD operations on
 
 **Package the application and Deploy the docker services:**
  - In your IDE environment, run
-	> `mvn clean package spring-boot:repackage`
+    > `mvn clean package spring-boot:repackage`
  
-	A **`mpms_7-15-1.0.0-SNAPSHOT.jar`**  file is generated in **`target`** folder.
-	So, you basically need the following file structure: 
-![docker package file explorer](https://surfdrive.surf.nl/files/index.php/s/sv1Unera5sZwOtY/download)
+    A **`mpms_7-15-1.0.0-SNAPSHOT.jar`**  file is generated in **`target`** folder.
+    So, you basically need the following file structure:
+
+	![docker package file explorer](https://surfdrive.surf.nl/files/index.php/s/sv1Unera5sZwOtY/download)
  - Configure parameters in **`.env`** file
-	 - e.g., OrionLD CB url:port, DB ports, passwords
+     - e.g., OrionLD CB url:port, DB ports, passwords
  - Open a terminal, navigate to the **`docker`** folder and run:
-	> `docker-compose up -d --build`
+    > `docker-compose up -d --build`
 ![docker-compose up console](https://surfdrive.surf.nl/files/index.php/s/oXUH6icbvH6z56w/download)
  - To see the console of the *`shop4cf-mpms`* application, run:
-	> `docker logs shop4cf-mpms -f`
-	![camunda-platform logs console](https://surfdrive.surf.nl/files/index.php/s/iE1n0PkpUP4nGHs/download)
-	 - when you see the following at the end, everything is ready (or search for the red-highlighted logs):
-	 ![camunda-platform logs console ready](https://surfdrive.surf.nl/files/index.php/s/A7k5683H19F5d81/download)
+    > `docker logs shop4cf-mpms -f`
+    ![camunda-platform logs console](https://surfdrive.surf.nl/files/index.php/s/iE1n0PkpUP4nGHs/download)
+     - when you see the following at the end, everything is ready (or search for the red-highlighted logs):
+     ![camunda-platform logs console ready](https://surfdrive.surf.nl/files/index.php/s/A7k5683H19F5d81/download)
 
 ## How to use it?
 
@@ -103,7 +104,7 @@ Provided under various open source licenses (mainly [Apache License 2.0](http://
 
 ## Version History
 	 
-- **Version 1.0** (10-Feb-2022)
+- **Version 1.0** (25-Feb-2022)
        
     Initial version of MPMS with:
 	 - Core functionality
