@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+  mpms:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    image: mpms:0.1.0
+    container_name: ${PROJECT_NAME:-demo-project}-${COMPONENT_NAME:-mpms}
+    restart: unless-stopped
+    environment:
+      MPMS_ADMIN: ${MPMS_ADMIN:-demo}
+      MPMS_ADMIN_PASSWORD: ${MPMS_ADMIN_PASSWORD:-demo}
+      MPMS_CORE_DB_HOST: mpms-core-db
+      MPMS_CORE_DB_NAME: ${MPMS_CORE_POSTGRES_DB:-mpms}
+      MPMS_CORE_DB_USERNAME: ${MPMS_CORE_POSTGRES_USER:-mpms}
+      MPMS_CORE_DB_PASSWORD: ${MPMS_CORE_POSTGRES_PASSWORD:-mpms}
+      MPMS_APP_DB_HOST: mpms-app-db
+      MPMS_APP_DB_NAME: ${MPMS_APP_POSTGRES_DB:-mpms}
+      MPMS_APP_DB_USERNAME: ${MPMS_APP_POSTGRES_USER:-mpms}
+      MPMS_APP_DB_PASSWORD: ${MPMS_APP_POSTGRES_PASSWORD:-mpms}
+      FIWARE_ORIONLD_URL: ${FIWARE_ORIONLD_URL:-http://192.168.0.103:1026}
+      FIWARE_SUBSCRIPTION_URL: ${FIWARE_SUBSCRIPTION_URL:-http://192.168.0.103:20000}
+    ports:
+      - ${MPMS_PORT:-20000}:20000
+    networks:
+      - mpms-network
+    depends_on:
+      - mpms-core-db
+      - mpms-app-db
+
+  mpms-core-db:
+    image: postgres:14-alpine
+    container_name: ${PROJECT_NAME:-demo-project}-${COMPONENT_NAME:-mpms}-core-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${MPMS_CORE_POSTGRES_DB:-mpms}
+      POSTGRES_USER: ${MPMS_CORE_POSTGRES_USER:-mpms}
+      POSTGRES_PASSWORD: ${MPMS_CORE_POSTGRES_PASSWORD:-mpms}
+    ports:
+      - ${MPMS_CORE_DB_PORT:-5433}:5432
+    volumes:
+      - mpms-core-postgres-data:/var/lib/postgresql/data
+    networks:
+      - mpms-network
+
+  mpms-app-db:
+    image: postgres:14-alpine
+    container_name: ${PROJECT_NAME:-demo-project}-${COMPONENT_NAME:-mpms}-app-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${MPMS_APP_POSTGRES_DB:-mpms}
+      POSTGRES_USER: ${MPMS_APP_POSTGRES_USER:-mpms}
+      POSTGRES_PASSWORD: ${MPMS_APP_POSTGRES_PASSWORD:-mpms}
+    ports:
+      - ${MPMS_APP_DB_PORT:-5434}:5432
+    volumes:
+      - mpms-app-postgres-data:/var/lib/postgresql/data
+    networks:
+      - mpms-network
+
+  adminer:
+    image: adminer:4.8.1
+    container_name: ${PROJECT_NAME:-demo-project}-${COMPONENT_NAME:-mpms}-adminer
+    depends_on:
+      - mpms-core-db
+    environment:
+      ADMINER_DEFAULT_SERVER: mpms-core-db
+      ADMINER_DESIGN: dracula
+    ports:
+      - ${ADMINER_PORT:-9000}:8080
+    networks:
+      - mpms-network
+
+volumes:
+  mpms-core-postgres-data:
+    driver: local
+  mpms-app-postgres-data:
+    driver: local
+  mpms-logs-data:
+    driver: local
+
+networks:
+  mpms-network: {}

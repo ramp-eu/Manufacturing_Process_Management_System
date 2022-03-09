@@ -1,0 +1,113 @@
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+    .completed {
+        background-color: lightgreen;
+    }
+
+    .pending {
+        background-color: cyan;
+    }
+
+    .failed {
+        background-color: red;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<form class="form-horizontal" role="form">
+    <legend>New Task</legend>
+
+    <div>
+        <div class="col-md-12">
+            <h4 class="inline">
+                A new task is received.
+                See below info for more details.
+            </h4>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <label>Task Info</label>
+                        <table>
+                            <tr>
+                                <th>Property</th>
+                                <th>Value</th>
+                            </tr>
+
+                            <tr>
+                                <td>ID</td>
+                                <td>{{task.id}}</td>
+                            </tr>
+                            <tr>
+                                <td>Defined By</td>
+                                <td>{{task.isDefinedBy.object}}</td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td
+                                    ng-class="task.status.value == 'completed' ? 'completed' : (task.status.value=='pending' ? 'pending' : 'failed' )">
+                                    {{task.status.value}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <label>Work Parameters Info</label>
+                    <table>
+                        <tr>
+                            <th>Property</th>
+                            <th>Value</th>
+                        </tr>
+
+                        <tr ng-repeat="(key, value) in workParameter_collection">
+                            <td>{{key}}</td>
+                            <td>{{value}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script cam-script type="text/form-script">
+        var variableManager = camForm.variableManager;
+        $scope.options.disableCompleteButton=true;
+
+        camForm.on('form-loaded', function(){
+            variableManager.fetchVariable('IncomingTask')
+        })
+
+        camForm.on('variables-fetched', function(){
+            $scope.task=variableManager.variable('IncomingTask').value;
+            $scope.workParameter_collection=$scope.task.workParameters.value;
+            console.log("Task fetched.");
+            console.log($scope.workParameter_collection);
+        })
+    </script>
+</form>

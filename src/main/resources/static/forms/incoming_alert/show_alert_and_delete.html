@@ -1,0 +1,127 @@
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+textarea {
+  width:100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+<form class="form-horizontal" role="form">
+    <legend>New Alert!</legend>
+
+    <div>
+        <div class="col-md-12">
+            <h4 class="inline">
+                A new alert is received.
+                See below info for more details.
+            </h4>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <label>Alert Info</label>
+                        <table>
+                            <tr>
+                                <th>Property</th>
+                                <th>Value</th>
+                            </tr>
+
+                            <tr>
+                                <td>ID</td>
+                                <td>{{alert.id}}</td>
+                            </tr>
+                            <tr>
+                                <td>Source</td>
+                                <td>{{alert.alertSource.object}}</td>
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td>{{alert.category.value}}</td>
+                            </tr>
+                            <tr>
+                                <td>SubCategory</td>
+                                <td>{{alert.subCategory.value}}</td>
+                            </tr>
+                            <tr>
+                                <td>Severity</td>
+                                <td>{{alert.severity.value}}</td>
+                            </tr>
+                            <tr>
+                                <td>Human Verified</td>
+                                <td>{{alert.humanVerified.value}}</td>
+                            </tr>
+                            <tr>
+                                <td>Date Issued</td>
+                                <td>{{alert.dateIssued.value.value | date : format : timezone}}</td>
+                            </tr>
+                            <tr>
+                                <td>Date Modified</td>
+                                <td>{{alert.dateModified.value.value | date : format : timezone}}</td>
+                            </tr>
+                            <tr>
+                                <td>Valid From</td>
+                                <td>{{alert.validFrom.value.value | date : format : timezone}}</td>
+                            </tr>
+                        </table>
+                        <h5>Description:</h5>
+                        <div class="col-md-12">
+                            <textarea rows="6">{{alert.description.value}}</textarea>
+                        </div>
+                        <h5>See also:  <a href={{alert.seeAlso}}>{{alert.seeAlso.value}}</a></h5></dt>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <label>Proceed to all necessary actions to resolve the alert.</label>
+    </div>
+
+    <div class="form-confirm-mission">
+        <div class="col-md-12">
+            <label>When the alert is resolved check yes to DELETE the alert and end this process.</label>
+            <p><input type="radio" value="yes" ng-model="decision_radio" ng-change="changeDecision()">Yes</input></p>
+            <p><input type="radio" value="no" ng-model="decision_radio" ng-change="changeDecision()">No</input></p>
+        </div>
+    </div>
+
+    <script cam-script type="text/form-script">
+        var variableManager = camForm.variableManager;
+        $scope.options.disableCompleteButton=true;
+
+        camForm.on('form-loaded', function(){
+            variableManager.fetchVariable('IncomingAlert')
+        })
+
+        camForm.on('variables-fetched', function(){
+            $scope.alert=variableManager.variable('IncomingAlert').value;
+        })
+
+        $scope.changeDecision = function(){
+            if ($scope.decision_radio=="yes") {
+                $scope.alert_delete= true;
+                $scope.options.disableCompleteButton=false;
+            }
+            else {
+                $scope.alert_delete= false;
+                $scope.options.disableCompleteButton=true;
+            }
+        }
+    </script>
+</form>

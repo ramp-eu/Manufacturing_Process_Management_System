@@ -1,8 +1,90 @@
-spring.datasource.url: jdbc:h2:file:./camunda-h2-database
-firewareUrl: http://bf-reconfig-server.eurodyn.com:1026/v2/entities
-subscriptionUrl: http://bf-reconfig-server.eurodyn.com:1026/v2/subscriptions
-notificationUrl: http://bf-reconfig-server.eurodyn.com:8080/subscription
-entityType: APMRobotProfile, APMManufacturingTasksDefReq, MESManufacturingTasksDefResp
-camunda.bpm.admin-user:
-  id: demo
-  password: demo
+####################################################################################################
+# MPMS SERVER PORT
+####################################################################################################
+server:
+  port: 20000
+  address: 0.0.0.0
+
+####################################################################################################
+# EXTERNALIZE MPMS CONFIGURATION
+####################################################################################################
+fiware:
+  orionld-url: ${FIWARE_ORIONLD_URL:http://localhost:1026}
+  subscription-url: ${FIWARE_SUBSCRIPTION_URL:http://192.168.0.103:20000}
+
+mpms:
+  admin:
+    username: ${MPMS_ADMIN:demo}
+    password: ${MPMS_ADMIN_PASSWORD:demo}
+  core-db:
+    host: ${MPMS_CORE_DB_HOST:localhost:5433}
+    name: ${MPMS_CORE_DB_NAME:mpms}
+    username: ${MPMS_CORE_DB_USERNAME:demo}
+    password: ${MPMS_CORE_DB_PASSWORD:demo}
+  app-db:
+    host: ${MPMS_APP_DB_HOST:localhost:5433}
+    name: ${MPMS_APP_DB_NAME:mpms}
+    username: ${MPMS_APP_DB_USERNAME:demo}
+    password: ${MPMS_APP_DB_PASSWORD:demo}
+
+
+####################################################################################################
+# CAMUNDA CONFIG
+####################################################################################################
+camunda.bpm:
+  database:
+    type: postgres
+  admin-user:
+    id: ${mpms.admin.username}
+    password: ${mpms.admin.password}
+  history-level: FULL
+  generic-properties:
+    properties:
+      initializeTelemetry: false
+      telemetryReporterActivate: false
+  filter:
+    create: All tasks
+
+####################################################################################################
+# MPMS CORE DATASOURCE CONFIG
+####################################################################################################
+core.datasource:
+  platform: postgres
+  url: jdbc:postgresql://${mpms.core-db.host}/${mpms.core-db.name}
+  username: ${mpms.core-db.username}
+  password: ${mpms.core-db.password}
+  driverClassName: org.postgresql.Driver
+
+####################################################################################################
+# MPMS APP DATASOURCE CONFIG
+####################################################################################################
+app.datasource:
+  platform: postgres
+  url: jdbc:postgresql://${mpms.app-db.host}/${mpms.app-db.name}
+  username: ${mpms.app-db.username}
+  password: ${mpms.app-db.password}
+  driverClassName: org.postgresql.Driver
+
+####################################################################################################
+# SPRING JPA CONFIG
+####################################################################################################
+spring:
+  jpa:
+    database: default
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+
+
+
+#  H2 MPMS Core Database config
+#spring.datasource.url: jdbc:h2:file:./mpms-process-engine-h2-db
+#spring:
+#  datasource:
+#    url: jdbc:h2:file:./mpms-process-engine-h2-db
+#    username: sa
+#    password: sa
+#spring.h2.console.enabled: true

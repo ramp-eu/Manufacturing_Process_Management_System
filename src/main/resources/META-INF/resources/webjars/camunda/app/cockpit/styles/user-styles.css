@@ -1,0 +1,49 @@
+/* hides the Camunda logo */
+.app-banner svg {
+  display: none;
+}
+.app-banner {
+  /* hides the "Camunda Cockpit" text */
+  /*text-indent: 200vw;;*/
+  /* put your logo */
+  /*background-image: url(../../assets/images/shop4cf-logo.png);*/
+  background-repeat: no-repeat;
+  background-size: ${CUSTOM_LOGO_BACKGROUND_SIZE};
+  /*background-size: 98px;*/
+  background-position: ${CUSTOM_LOGO_BACKGROUND_POSITION};
+  /*background-position: 0 1px;*/
+  width: ${CUSTOM_LOGO_WIDTH};
+  /*width: 280px;*/
+  /*margin-left: 10px;*/
+  color: ${CUSTOM_COLOR_TEXT};
+  /* sets the width to match the logo's width */
+}
+
+/* changes the header top border color  */
+.Header {
+  border-top-color: ${CUSTOM_COLOR_LINES} !important;
+}
+
+/*.Header {*/
+/*  border-bottom: 2px solid ${CUSTOM_COLOR_LINES};*/
+/*}*/
+
+[cam-widget-footer] {
+  background: url(../assets/images/tue-logo.svg);
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  padding-left: 120px;
+}
+
+/*[cam-widget-footer] {*/
+/*	color: white;*/
+/*	background-color: ${CUSTOM_COLOR_LINES};*/
+/*}*/
+
+/*[cam-widget-footer] a {*/
+/*	color: white;*/
+/*}*/
+/*[cam-widget-footer] a:hover, [cam-widget-footer] a:focus {*/
+/*    color: black;*/
+/*}*/
